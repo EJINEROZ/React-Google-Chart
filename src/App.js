@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
 
+
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import response from "./data.json"
+import Chart from './Components/Chart'
+import { Container } from 'react-bootstrap';
 function App() {
+ 
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    if(setData){
+      setData(response)
+    }
+  }, [setData]);
   return (
+    <Container className='mt-3'>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     
+      <span>
+      <h2>Available charts</h2>
+      { data && data.charts.map((chartData, i) => (
+        <Chart chart={chartData} key={i}/>
+      ))}
+      </span>
     </div>
+    </Container>
+      
   );
 }
-
 export default App;
